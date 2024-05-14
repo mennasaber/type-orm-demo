@@ -12,6 +12,6 @@ export class User {
   email: string;
   @Column({ default: false })
   removed: boolean;
-  @Column({ default: new Date() })
+  @Column()
   createdAt: Date;
 }
