@@ -10,8 +10,8 @@ export class User {
   phoneNumber: string;
   @Column()
   email: string;
-  @Column()
+  @Column({ default: false })
   removed: boolean;
-  @Column()
+  @Column({ default: new Date() })
   createdAt: Date;
 }
