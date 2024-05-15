@@ -19,6 +19,7 @@ import { UserModule } from './user/user.module';
       database: process.env.DB_NAME,
       entities: [User],
       migrationsRun: false,
+      logging: true,
       // synchronize: true,
     }),
   ],
