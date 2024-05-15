@@ -9,10 +9,7 @@ import { Order } from './entities/order.entity';
 export class OrderService {
   constructor(@InjectRepository(Order) private orderRepo: Repository<Order>) {}
   async create(createOrderDto: CreateOrderDto) {
-    const order = this.orderRepo.create({
-      ...createOrderDto,
-      createdAt: new Date(),
-    });
+    const order = this.orderRepo.create(createOrderDto);
     return this.orderRepo.save(order);
   }
 
