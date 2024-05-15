@@ -16,11 +16,21 @@ export class UserService {
     return this.userRepo.save(user);
   }
 
-  findAll() {
+  async findAll() {
+    //NOTE: typeORM Will transform both to the same sql query
+    const users = await this.userRepo
+      .createQueryBuilder('user')
+      .where('user.removed = :removed', { removed: false })
+      .getMany();
     return this.userRepo.find({ where: { removed: false } });
   }
 
-  findOne(id: number) {
+  async findOne(id: number) {
+    //NOTE: typeORM Will transform both to the same sql query
+    const user = await this.userRepo
+      .createQueryBuilder()
+      .where('id=:id', { id })
+      .getOne();
     return this.userRepo.findOneBy({ id });
   }
 
