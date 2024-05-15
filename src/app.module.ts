@@ -3,6 +3,8 @@ import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+import { Order } from './order/entities/order.entity';
+import { OrderModule } from './order/order.module';
 import { User } from './user/entities/user.entity';
 import { UserModule } from './user/user.module';
 
@@ -17,11 +19,12 @@ import { UserModule } from './user/user.module';
       username: process.env.DB_USERNAME,
       password: process.env.DB_PASSWORD,
       database: process.env.DB_NAME,
-      entities: [User],
+      entities: [User, Order],
       migrationsRun: false,
       logging: true,
       // synchronize: true,
     }),
+    OrderModule,
   ],
   controllers: [AppController],
   providers: [AppService],
