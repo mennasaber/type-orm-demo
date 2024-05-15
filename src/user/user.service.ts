@@ -20,18 +20,20 @@ export class UserService {
     //NOTE: typeORM Will transform both to the same sql query
     const users = await this.userRepo
       .createQueryBuilder('user')
+      .loadRelationCountAndMap('user.ordersCount', 'user.orders')
       .where('user.removed = :removed', { removed: false })
       .getMany();
-    return this.userRepo.find({ where: { removed: false } });
+    return users; //this.userRepo.find({ where: { removed: false } });
   }
 
   async findOne(id: number) {
     //NOTE: typeORM Will transform both to the same sql query
     const user = await this.userRepo
-      .createQueryBuilder()
-      .where('id=:id', { id })
+      .createQueryBuilder('user')
+      .leftJoinAndSelect('user.orders', 'order')
+      .where('user.id=:id', { id })
       .getOne();
-    return this.userRepo.findOneBy({ id });
+    return user; //this.userRepo.findOneBy({ id });
   }
 
   async update(id: number, updateUserDto: UpdateUserDto) {
